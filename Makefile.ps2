@@ -1,0 +1,23 @@
+CC	= ee-gcc
+CFLAGS	= -c -O2 -Iinclude/libxmp-lite -Isrc -Iinclude/libxmp-lite -DLIBXMP_CORE_PLAYER -ffast-math #-DDEBUG
+LD	= ee-ar
+LDFLAGS	= rv $(LIB)
+LIB	= lib/libxmp-lite.a
+
+OBJS	= src/virtual.o src/format.o src/period.o src/player.o src/read_event.o src/dataio.o src/lfo.o src/scan.o src/control.o src/filter.o src/effects.o src/mixer.o src/mix_all.o src/load_helpers.o src/load.o src/hio.o src/smix.o src/memio.o src/loaders/common.o src/loaders/itsex.o src/loaders/sample.o src/loaders/xm_load.o src/loaders/mod_load.o src/loaders/s3m_load.o src/loaders/it_load.o
+
+TEST	= test/md5.o test/test.o
+
+.c.o:
+	$(CC) $(CFLAGS) -o $*.o $<
+
+all: $(LIB)
+
+$(LIB): $(OBJS)
+	mkdir -p lib
+	$(LD) $(LDFLAGS) $(OBJS)
+	ee-ranlib $(LIB)
+
+clean:
+	rm $(OBJS) $(LIB)
+

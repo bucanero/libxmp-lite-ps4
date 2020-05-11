@@ -1,3 +1,18 @@
+libxmp-lite 4.5.0 with Makefile for the PS2. Requires ee-gcc and ee-ar.
+
+Build instructions:
+make -j4 -f Makefile.ps2
+
+After that, you can build the example:
+cd ps2example && make
+
+And run with:
+make run
+
+By default, ps2example/libxmptest.c tries to play a file called
+"module.mod", which is not provided.
+
+---
    __   _ __                       ___ __     
   / /  (_) / __ __ __ _  ___  ____/ (_) /____ 
  / /__/ / _ \\ \ //  ' \/ _ \/___/ / / __/ -_)

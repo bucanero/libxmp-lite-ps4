@@ -1,0 +1,28 @@
+TARGET    = vita-libxmp-lite.a
+OBJS      = src/virtual.o src/format.o src/period.o src/player.o src/read_event.o src/dataio.o src/lfo.o src/scan.o src/control.o src/filter.o src/effects.o src/mixer.o src/mix_all.o src/load_helpers.o src/load.o src/hio.o src/smix.o src/memio.o src/loaders/common.o src/loaders/itsex.o src/loaders/sample.o src/loaders/xm_load.o src/loaders/mod_load.o src/loaders/s3m_load.o src/loaders/it_load.o
+
+PREFIX   = $(VITASDK)/bin/arm-vita-eabi
+CC       = $(PREFIX)-gcc
+CXX      = $(PREFIX)-g++
+AR       = $(PREFIX)-ar
+CFLAGS   = -Wl,-q -Wall -O3 -Wno-unused-variable -Wno-unused-but-set-variable -ffat-lto-objects -flto -DLIBXMP_CORE_PLAYER -Iinclude/libxmp-lite -Isrc
+CXXFLAGS = $(CFLAGS) -std=gnu++11 -fno-rtti
+
+.PHONY: all clean
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+	$(AR) rcu $@ $^
+
+clean:
+	@rm -rf $(TARGET) $(OBJS)
+	@echo "Cleaned up!"
+
+install: $(TARGET)
+	@echo Copying...
+	@mkdir -p $(DESTDIR)$(VITASDK)/arm-vita-eabi/lib/
+	@mkdir -p $(DESTDIR)$(VITASDK)/arm-vita-eabi/include/
+	@cp -frv include/libxmp-lite/xmp.h $(DESTDIR)$(VITASDK)/arm-vita-eabi/include
+	@cp -frv $(TARGET) $(DESTDIR)$(VITASDK)/arm-vita-eabi/lib/libxmp-lite.a
+	@echo lib installed!

@@ -69,7 +69,8 @@ $(BUILD):
 
 install: $(BUILD)
 	@echo Copying...
-	@cp -frv include/libxmp-lite/xmp.h $(OO_PS4_TOOLCHAIN)/include
+	@mkdir -p $(OO_PS4_TOOLCHAIN)/include/libxmp-lite
+	@cp -frv include/libxmp-lite/xmp.h $(OO_PS4_TOOLCHAIN)/include/libxmp-lite
 	@cp -frv $(TARGET).a $(OO_PS4_TOOLCHAIN)/lib
 	@echo lib installed!
 clean:
